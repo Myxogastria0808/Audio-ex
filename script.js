@@ -1,13 +1,29 @@
 var wavesurfer = WaveSurfer.create({
-    container: '#waveform',
-    waveColor: '#137a7f',
-    progressColor: 'purple',
+  container: '#waveform',
+    // waveColor: '#137a7f',
+    // progressColor: 'purple',
+    waveColor: [ // an array of colors, to be applied as gradient color stops to the waveform.
+    "red",
+    "green",
+    "purple",
+    "yellow",
+    "rgba(0,255,255,.5)",
+  ],
+    progressColor: [ // the gradient fill styles are also available on the progressColor option
+    "orange",
+    "blue",
+    "cyan",
+    "black",
+    "rgba(0,255,255,.5)",
+  ],
     backgroundColor: 'skyblue',
     audioRate: 1,
     splitChannels: false,
     normalize: true,
     autoCenter: true,
-    barWidth: 1,
+    barWidth: 3,
+    barGap: 3,
+    barRadius: 3,
     cursorColor: 'green',
     cursorWidth: 5,
     forceDecode: true,
@@ -17,11 +33,35 @@ var wavesurfer = WaveSurfer.create({
     partialRender: true,
     responsive: 0.01,
     plugins: [
-
-    ]
+      WaveSurfer.cursor.create({
+          showTime: true,
+          opacity: 1,
+          customShowTimeStyle: {
+              'background-color': '#000',
+              color: '#fff',
+              padding: '2px',
+              'font-size': '10px'
+          }
+      }),
+      WaveSurfer.markers.create({
+        markers: [
+            {
+                time: 1.0,
+                label: "V1",
+                color: '#ff990a'
+            },
+            {
+                time: 5.0,
+                label: "V2",
+                color: '#00ffcc',
+                position: 'top'
+            }
+        ]
+      })
+  ],
 });
 
-wavesurfer.load('https://dl.dropbox.com/s/c4i9dvr6g7bjvhr/miku_doremi120.mp3?dl=0');
+wavesurfer.load('./onoko-koka.mp3');
 
 playstop = () => {
   if (wavesurfer.isPlaying()){  
